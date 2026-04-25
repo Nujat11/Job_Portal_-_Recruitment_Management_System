@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logged Out | JobPortal BD</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(270deg, #0f2027, #203a43, #2c5364);
+    background-size: 400% 400%;
+    animation: gradientMove 12s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+  }
+
+  @keyframes gradientMove {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .card {
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 18px;
+    padding: 50px 40px;
+    width: 100%;
+    max-width: 450px;
+    color: white;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    animation: slideUp 0.5s ease;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .icon-circle {
+    width: 80px; 
+    height: 80px; 
+    border-radius: 50%;
+    background: rgba(29, 158, 117, 0.2);
+    border: 2px solid rgba(93, 202, 165, 0.5);
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center;
+    margin-bottom: 25px;
+    animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    transform: scale(0);
+  }
+
+  @keyframes popIn {
+    to { transform: scale(1); }
+  }
+
+  .icon-circle svg { 
+    width: 40px; 
+    height: 40px; 
+    stroke: #5DCAA5;
+    stroke-dasharray: 50;
+    stroke-dashoffset: 50;
+    animation: drawCheck 0.5s 0.6s forwards;
+  }
+
+  @keyframes drawCheck {
+    to { stroke-dashoffset: 0; }
+  }
+
+  .title { 
+    font-size: 24px; 
+    font-weight: 600; 
+    color: white; 
+    margin-bottom: 12px; 
+    letter-spacing: 0.5px; 
+  }
+  
+  .sub { 
+    font-size: 14px; 
+    color: rgba(200,220,230,0.7); 
+    margin-bottom: 35px; 
+    font-weight: 300; 
+    line-height: 1.5;
+  }
+
+  .btn {
+    display: inline-block;
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    letter-spacing: 0.3px;
+  }
+
+  .btn-primary { 
+    background: linear-gradient(45deg, #00c6ff, #0072ff); 
+    color: white; 
+    box-shadow: 0 4px 15px rgba(0, 114, 255, 0.3);
+  }
+
+  .btn-primary:hover { 
+    transform: translateY(-2px); 
+    box-shadow: 0 8px 24px rgba(0, 114, 255, 0.4); 
+  }
+  
+  .btn-outline {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    margin-top: 15px;
+  }
+
+  .btn-outline:hover {
+    background: rgba(255,255,255,0.05);
+  }
+</style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="icon-circle">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+    </div>
+    <div class="title">Successfully Logged Out</div>
+    <p class="sub">You have been securely logged out of your account. Thank you for visiting JobPortal BD.</p>
+    
+    <a href="login_logOut_interface.html#login" class="btn btn-primary">Log In Again</a>
+    <a href="job_portal.php" class="btn btn-outline">Return to Job Portal</a>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JobPortal BD — Your Career Starts Here</title>
+  <meta name="description"
+    content="JobPortal BD — Find your dream job in Bangladesh. Login or create an account to get started.">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(270deg, #0f2027, #203a43, #2c5364);
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+
+    @keyframes gradientMove {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .page {
+      display: none;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .page.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.5;
+      }
+    }
+
+    .card {
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 18px;
+      padding: 42px 44px;
+      width: 100%;
+      max-width: 420px;
+      color: white;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .logo span {
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .sub {
+      text-align: center;
+      font-size: 13px;
+      color: rgba(200, 220, 230, 0.7);
+      margin-bottom: 28px;
+      font-weight: 300;
+    }
+
+    .field {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid rgba(200, 220, 230, 0.3);
+      color: white;
+      padding: 9px 0;
+      font-size: 14px;
+      font-family: 'Poppins', sans-serif;
+      outline: none;
+      margin-bottom: 22px;
+      transition: border-color 0.25s;
+    }
+
+    .field::placeholder {
+      color: rgba(180, 200, 215, 0.5);
+    }
+
+    .field:focus {
+      border-color: #00c6ff;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      margin-bottom: 18px;
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+      letter-spacing: 0.3px;
+      position: relative;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .btn-primary {
+      background: linear-gradient(45deg, #00c6ff, #0072ff);
+      color: white;
+    }
+
+    .btn-danger {
+      background: linear-gradient(45deg, #ff416c, #c0392b);
+      color: white;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid rgba(200, 220, 230, 0.4);
+      color: rgba(220, 235, 245, 0.85);
+      margin-bottom: 0;
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .btn .spinner {
+      display: none;
+      width: 18px;
+      height: 18px;
+      border: 2.5px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin: 0 auto;
+    }
+
+    .btn.loading .btn-text {
+      display: none;
+    }
+
+    .btn.loading .spinner {
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .links {
+      text-align: center;
+      font-size: 13px;
+      color: rgba(200, 220, 230, 0.65);
+      line-height: 2.2;
+    }
+
+    .lnk {
+      color: #00c6ff;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .lnk:hover {
+      text-decoration: underline;
+    }
+
+    .msg {
+      font-size: 13px;
+      text-align: center;
+      padding: 9px 14px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      display: none;
+    }
+
+    .msg.success {
+      background: rgba(29, 158, 117, 0.2);
+      color: #5DCAA5;
+      border: 0.5px solid rgba(93, 202, 165, 0.35);
+    }
+
+    .msg.error {
+      background: rgba(226, 75, 74, 0.2);
+      color: #f09595;
+      border: 0.5px solid rgba(240, 149, 149, 0.35);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 2px 0 18px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(200, 220, 230, 0.18);
+    }
+
+    .divider span {
+      font-size: 12px;
+      color: rgba(200, 220, 230, 0.4);
+      white-space: nowrap;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      padding: 3px 12px;
+      border-radius: 20px;
+      background: rgba(0, 198, 255, 0.15);
+      color: #00c6ff;
+      border: 0.5px solid rgba(0, 198, 255, 0.3);
+      margin-bottom: 20px;
+    }
+
+    .avatar {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00c6ff, #0072ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 600;
+      color: white;
+      margin: 0 auto 14px;
+      box-shadow: 0 4px 20px rgba(0, 114, 255, 0.35);
+    }
+
+    .welcome-name {
+      text-align: center;
+      font-size: 19px;
+      font-weight: 500;
+      color: white;
+      margin-bottom: 4px;
+    }
+
+    .welcome-email {
+      text-align: center;
+      font-size: 13px;
+      color: rgba(200, 220, 230, 0.55);
+      margin-bottom: 24px;
+      font-weight: 300;
+    }
+
+    .info-table {
+      border-top: 0.5px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 24px;
+      padding: 4px 0;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 0;
+      border-bottom: 0.5px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .info-label {
+      font-size: 13px;
+      color: rgba(200, 220, 230, 0.5);
+      font-weight: 300;
+    }
+
+    .info-val {
+      font-size: 13px;
+      color: white;
+      font-weight: 500;
+      text-align: right;
+      max-width: 60%;
+      word-break: break-word;
+    }
+
+    .info-val.active {
+      color: #5DCAA5;
+    }
+
+    .icon-wrap {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .icon-circle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(0, 198, 255, 0.12);
+      border: 1.5px solid rgba(0, 198, 255, 0.25);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icon-circle svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Page loading overlay */
+    .page-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(270deg, #0f2027, #203a43, #2c5364);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.4s ease;
+    }
+
+    .page-loader.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .page-loader .spinner-lg {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(255, 255, 255, 0.15);
+      border-top-color: #00c6ff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- PAGE LOADER (shown while checking session) -->
+  <div id="page-loader" class="page-loader">
+    <div class="spinner-lg"></div>
+  </div>
+
+  <!-- LOGIN -->
+  <div id="page-login" class="page">
+    <div class="card">
+      <div class="logo">Job<span>Portal BD</span></div>
+      <p class="sub">Sign in to your account</p>
+      <div id="login-msg" class="msg"></div>
+      <input id="login-email" class="field" type="email" placeholder="Email address" autocomplete="email">
+      <input id="login-pass" class="field" type="password" placeholder="Password" autocomplete="current-password">
+      <button id="btn-login" class="btn btn-primary">
+        <span class="btn-text">Login</span>
+        <span class="spinner"></span>
+      </button>
+      <div class="divider"><span>or</span></div>
+      <div class="links">
+        <a class="lnk" onclick="showPage('forgot')">Forgot password?</a><br>
+        New Job Seeker? <a class="lnk" onclick="showPage('register')">Create account</a><br>
+        New Employer? <a class="lnk" onclick="showPage('register-employer')">Create Employer account</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- REGISTER -->
+  <div id="page-register" class="page">
+    <div class="card">
+      <div class="logo">Job<span>Portal BD</span></div>
+      <p class="sub">Create your free account</p>
+      <div id="reg-msg" class="msg"></div>
+      <input id="reg-name" class="field" type="text" placeholder="Full name" autocomplete="name">
+      <input id="reg-email" class="field" type="email" placeholder="Email address" autocomplete="email">
+      <input id="reg-phone" class="field" type="tel" placeholder="Phone number (e.g. 01711223344)" autocomplete="tel">
+      <input id="reg-skills" class="field" type="text" placeholder="Skills (e.g. Java, PHP) - Optional">
+      <input id="reg-experience" class="field" type="text" placeholder="Experience (e.g. 2 years) - Optional">
+      <input id="reg-pass" class="field" type="password" placeholder="Password (min. 6 chars)"
+        autocomplete="new-password">
+      <input id="reg-pass2" class="field" type="password" placeholder="Confirm password" autocomplete="new-password">
+      <button id="btn-register" class="btn btn-primary">
+        <span class="btn-text">Create account</span>
+        <span class="spinner"></span>
+      </button>
+      <div class="divider"><span>or</span></div>
+      <div class="links">
+        Want to hire? <a class="lnk" onclick="showPage('register-employer')">Register as Employer</a><br>
+        Already have an account? <a class="lnk" onclick="showPage('login')">Sign in</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- REGISTER EMPLOYER -->
+  <div id="page-register-employer" class="page">
+    <div class="card">
+      <div class="logo">Job<span>Portal BD</span></div>
+      <p class="sub">Create your Employer account</p>
+      <div id="reg-emp-msg" class="msg"></div>
+      <input id="reg-emp-name" class="field" type="text" placeholder="Full name" autocomplete="name">
+      <input id="reg-emp-email" class="field" type="email" placeholder="Email address" autocomplete="email">
+      <input id="reg-emp-pass" class="field" type="password" placeholder="Password (min. 6 chars)" autocomplete="new-password">
+      <input id="reg-emp-pass2" class="field" type="password" placeholder="Confirm password" autocomplete="new-password">
+      <button id="btn-register-employer" class="btn btn-primary">
+        <span class="btn-text">Create Employer account</span>
+        <span class="spinner"></span>
+      </button>
+      <div class="divider"><span>or</span></div>
+      <div class="links">
+        Looking for a job? <a class="lnk" onclick="showPage('register')">Register as Job Seeker</a><br>
+        Already have an account? <a class="lnk" onclick="showPage('login')">Sign in</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="page-dashboard" class="page">
+    <div class="card" style="text-align:center">
+      <div><span class="badge">Logged in</span></div>
+      <div class="avatar" id="dash-initials">JD</div>
+      <div class="welcome-name" id="dash-name">John Doe</div>
+      <div class="welcome-email" id="dash-email">john@example.com</div>
+      <div class="info-table">
+        <div class="info-row">
+          <span class="info-label">Phone</span>
+          <span class="info-val" id="dash-phone">—</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Skills</span>
+          <span class="info-val" id="dash-skills">—</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Experience</span>
+          <span class="info-val" id="dash-experience">—</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Account type</span>
+          <span class="info-val">Job Seeker</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Status</span>
+          <span class="info-val active">Active</span>
+        </div>
+      </div>
+      <button class="btn btn-outline" onclick="window.location.href='job_portal.php'" style="margin-bottom: 20px;">
+        <span class="btn-text">Browse Jobs</span>
+      </button>
+      <button id="btn-logout" class="btn btn-danger">
+        <span class="btn-text">Logout</span>
+        <span class="spinner"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- FORGOT PASSWORD -->
+  <div id="page-forgot" class="page">
+    <div class="card">
+      <div class="icon-wrap">
+        <div class="icon-circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#00c6ff" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+        </div>
+      </div>
+      <div class="logo">Job<span>Portal BD</span></div>
+      <p class="sub">Reset your password</p>
+      <div id="forgot-msg" class="msg"></div>
+      <input id="forgot-email" class="field" type="email" placeholder="Enter your email address" autocomplete="email">
+      <button id="btn-forgot" class="btn btn-primary">
+        <span class="btn-text">Send reset link</span>
+        <span class="spinner"></span>
+      </button>
+      <button class="btn btn-outline" onclick="showPage('login')">Back to login</button>
+    </div>
+  </div>
+
+  <!-- RESET PASSWORD -->
+  <div id="page-reset-password" class="page">
+    <div class="card">
+      <div class="icon-wrap">
+        <div class="icon-circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#00c6ff" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+        </div>
+      </div>
+      <div class="logo">Job<span>Portal BD</span></div>
+      <p class="sub">Set new password</p>
+      <div id="reset-msg" class="msg"></div>
+      
+      <!-- hidden fields to store email and table context -->
+      <input type="hidden" id="reset-email-hidden" value="">
+      <input type="hidden" id="reset-table-hidden" value="">
+
+      <input id="reset-pass" class="field" type="password" placeholder="New Password (min. 6 chars)" autocomplete="new-password">
+      <input id="reset-pass2" class="field" type="password" placeholder="Confirm New Password" autocomplete="new-password">
+      
+      <button id="btn-reset-password" class="btn btn-primary">
+        <span class="btn-text">Update Password</span>
+        <span class="spinner"></span>
+      </button>
+      <button class="btn btn-outline" onclick="showPage('login')">Cancel</button>
+    </div>
+  </div>
+
+  <script>
+
+
+    /*UTILITY FUNCTION*/
+
+    // Switch visible page
+    function showPage(name) {
+      document.querySelectorAll('.page').forEach(function (p) { p.classList.remove('active'); });
+      document.getElementById('page-' + name).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Show a message box (success / error)
+    function showMsg(id, text, type) {
+      var el = document.getElementById(id);
+      el.textContent = text;
+      el.className = 'msg ' + type;
+      el.style.display = 'block';
+      clearTimeout(el._timer);
+      el._timer = setTimeout(function () { el.style.display = 'none'; }, 4500);
+    }
+
+    // Toggle loading spinner on a button
+    function setLoading(btnId, loading) {
+      var btn = document.getElementById(btnId);
+      if (loading) {
+        btn.classList.add('loading');
+        btn.disabled = true;
+      } else {
+        btn.classList.remove('loading');
+        btn.disabled = false;
+      }
+    }
+
+    // Generic POST request to PHP backend (returns JSON)
+    function apiPost(url, data) {
+      return fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+        .then(function (res) { return res.json(); });
+    }
+
+    /*LOGIN-  POST /login.ph*/
+    function doLogin() {
+      var email = document.getElementById('login-email').value.trim();
+      var pass = document.getElementById('login-pass').value;
+
+      if (!email || !pass) return showMsg('login-msg', 'Please fill in all fields.', 'error');
+
+      setLoading('btn-login', true);
+
+      apiPost('login.php', { email: email, password: pass })
+        .then(function (res) {
+          setLoading('btn-login', false);
+          if (res.success) {
+            showMsg('login-msg', res.message, 'success');
+
+            if (res.role === 'admin') {
+              // Redirect admins to the new admin dashboard
+              setTimeout(function () { window.location.href = res.redirect; }, 600);
+            } else if (res.role === 'employer') {
+              // Redirect employers to their dashboard
+              setTimeout(function () { window.location.href = res.redirect; }, 600);
+            } else {
+              // Normal job seeker redirect to job portal
+              setTimeout(function () { window.location.href = 'job_portal.php'; }, 600);
+            }
+          } else {
+            showMsg('login-msg', res.message, 'error');
+          }
+        })
+        .catch(function (err) {
+          setLoading('btn-login', false);
+          showMsg('login-msg', 'Server error. Make sure XAMPP is running.', 'error');
+          console.error('Login error:', err);
+        });
+    }
+
+    /*REGISTER-  POST /register.php*/
+
+    function doRegister() {
+      var name = document.getElementById('reg-name').value.trim();
+      var email = document.getElementById('reg-email').value.trim();
+      var phone = document.getElementById('reg-phone').value.trim();
+      var skills = document.getElementById('reg-skills').value.trim();
+      var experience = document.getElementById('reg-experience').value.trim();
+      var pass = document.getElementById('reg-pass').value;
+      var pass2 = document.getElementById('reg-pass2').value;
+
+      if (!name || !email || !pass || !pass2) return showMsg('reg-msg', 'Please fill in all required fields.', 'error');
+      if (pass !== pass2) return showMsg('reg-msg', 'Passwords do not match.', 'error');
+      if (pass.length < 6) return showMsg('reg-msg', 'Password must be at least 6 characters.', 'error');
+
+      setLoading('btn-register', true);
+
+      apiPost('register.php', { name: name, email: email, password: pass, phone: phone, skills: skills, experience: experience })
+        .then(function (res) {
+          setLoading('btn-register', false);
+          if (res.success) {
+            showMsg('reg-msg', res.message, 'success');
+            setTimeout(function () { window.location.href = 'job_portal.php'; }, 900);
+          } else {
+            showMsg('reg-msg', res.message, 'error');
+          }
+        })
+        .catch(function (err) {
+          setLoading('btn-register', false);
+          showMsg('reg-msg', 'Server error. Make sure XAMPP is running.', 'error');
+          console.error('Register error:', err);
+        });
+    }
+
+    /*REGISTER EMPLOYER- POST /register_employer.php*/
+
+    function doRegisterEmployer() {
+      var name = document.getElementById('reg-emp-name').value.trim();
+      var email = document.getElementById('reg-emp-email').value.trim();
+      var pass = document.getElementById('reg-emp-pass').value;
+      var pass2 = document.getElementById('reg-emp-pass2').value;
+
+      if (!name || !email || !pass || !pass2) return showMsg('reg-emp-msg', 'Please fill in all required fields.', 'error');
+      if (pass !== pass2) return showMsg('reg-emp-msg', 'Passwords do not match.', 'error');
+      if (pass.length < 6) return showMsg('reg-emp-msg', 'Password must be at least 6 characters.', 'error');
+
+      setLoading('btn-register-employer', true);
+
+      apiPost('register_employer.php', { name: name, email: email, password: pass })
+        .then(function (res) {
+          setLoading('btn-register-employer', false);
+          if (res.success) {
+            showMsg('reg-emp-msg', res.message, 'success');
+            setTimeout(function () { window.location.href = res.redirect || 'index.php'; }, 900); // Redirect to employer dashboard returned by server
+          } else {
+            showMsg('reg-emp-msg', res.message, 'error');
+          }
+        })
+        .catch(function (err) {
+          setLoading('btn-register-employer', false);
+          showMsg('reg-emp-msg', 'Server error. Make sure XAMPP is running.', 'error');
+          console.error('Register Employer error:', err);
+        });
+    }
+
+    /*LOGOUT-  POST /logout.p */
+
+    function doLogout() {
+      setLoading('btn-logout', true);
+      apiPost('logout.php', {})
+        .then(function (res) {
+          setLoading('btn-logout', false);
+          document.getElementById('login-email').value = '';
+          document.getElementById('login-pass').value = '';
+          window.location.href = 'logout_success.html';
+        })
+        .catch(function (err) {
+          setLoading('btn-logout', false);
+          // Even if request fails, go to success page (as session might have died)
+          window.location.href = 'logout_success.html';
+          console.error('Logout error:', err);
+        });
+    }
+
+    /*FORGOT PASSWORD- POST /forgot_password.php */
+
+    function doForgot() {
+      var email = document.getElementById('forgot-email').value.trim();
+      if (!email) return showMsg('forgot-msg', 'Please enter your email address.', 'error');
+
+      setLoading('btn-forgot', true);
+
+      apiPost('forgot_password.php', { email: email })
+        .then(function (res) {
+          setLoading('btn-forgot', false);
+          if (res.success) {
+            showMsg('forgot-msg', res.message, 'success');
+            // Populate hidden inputs for the reset step
+            document.getElementById('reset-email-hidden').value = email;
+            document.getElementById('reset-table-hidden').value = res.table;
+            setTimeout(function () { showPage('reset-password'); }, 1500);
+          } else {
+            showMsg('forgot-msg', res.message, 'error');
+          }
+        })
+        .catch(function (err) {
+          setLoading('btn-forgot', false);
+          showMsg('forgot-msg', 'Server error. Make sure XAMPP is running.', 'error');
+          console.error('Forgot password error:', err);
+        });
+    }
+
+    /*RESET PASSWORD- POST /reset_password.php */
+
+    function doResetPassword() {
+      var email = document.getElementById('reset-email-hidden').value;
+      var table = document.getElementById('reset-table-hidden').value;
+      var pass = document.getElementById('reset-pass').value;
+      var pass2 = document.getElementById('reset-pass2').value;
+
+      if (!pass || !pass2) return showMsg('reset-msg', 'Please fill in all fields.', 'error');
+      if (pass !== pass2) return showMsg('reset-msg', 'Passwords do not match.', 'error');
+      if (pass.length < 6) return showMsg('reset-msg', 'Password must be at least 6 characters.', 'error');
+
+      setLoading('btn-reset-password', true);
+
+      apiPost('reset_password.php', { email: email, new_password: pass, table: table })
+        .then(function (res) {
+          setLoading('btn-reset-password', false);
+          if (res.success) {
+            showMsg('reset-msg', res.message, 'success');
+            // Clear inputs securely
+            document.getElementById('reset-pass').value = '';
+            document.getElementById('reset-pass2').value = '';
+            setTimeout(function () { showPage('login'); }, 2200);
+          } else {
+            showMsg('reset-msg', res.message, 'error');
+          }
+        })
+        .catch(function (err) {
+          setLoading('btn-reset-password', false);
+          showMsg('reset-msg', 'Server error. Make sure XAMPP is running.', 'error');
+          console.error('Reset password error:', err);
+        });
+    }
+
+    /*DASHBOARD- populate with real user data*/
+
+    function loadDashboard(user) {
+      var initials = user.name.split(' ').map(function (n) { return n[0]; }).join('').toUpperCase().slice(0, 2);
+      document.getElementById('dash-initials').textContent = initials;
+      document.getElementById('dash-name').textContent = user.name;
+      document.getElementById('dash-email').textContent = user.email;
+      document.getElementById('dash-phone').textContent = user.phone || '—';
+      document.getElementById('dash-skills').textContent = user.skills || '—';
+      document.getElementById('dash-experience').textContent = user.experience || '—';
+    }
+
+    /*SESSION CHECK- auto-login if session exists (runs on every page load)*/
+
+    function checkSession() {
+      fetch('check_session.php')
+        .then(function (res) { return res.json(); })
+        .then(function (res) {
+          // Hide page loader
+          document.getElementById('page-loader').classList.add('hidden');
+
+          if (res.logged_in) {
+            if (res.role === 'admin') {
+              window.location.href = res.redirect;
+            } else if (res.role === 'employer') {
+              window.location.href = res.redirect;
+            } else {
+              window.location.href = 'job_portal.php';
+            }
+          } else {
+            showPage('login');
+          }
+        })
+        .catch(function (err) {
+          // If PHP isn't running, just show login page
+          document.getElementById('page-loader').classList.add('hidden');
+          showPage('login');
+          console.warn('Session check failed (is XAMPP running?):', err);
+        });
+    }
+
+    // Run session check on page load
+    checkSession();
+
+    /*EVENT LISTENERS*/
+
+    // Click Handlers
+    document.getElementById('btn-login').addEventListener('click', doLogin);
+    document.getElementById('btn-register').addEventListener('click', doRegister);
+    document.getElementById('btn-register-employer').addEventListener('click', doRegisterEmployer);
+    document.getElementById('btn-logout').addEventListener('click', doLogout);
+    document.getElementById('btn-forgot').addEventListener('click', doForgot);
+    document.getElementById('btn-reset-password').addEventListener('click', doResetPassword);
+
+    /*KEYBOARD- Enter key submits the active form*/
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter') return;
+      var id = (document.querySelector('.page.active') || {}).id;
+      if (id === 'page-login') doLogin();
+      if (id === 'page-register') doRegister();
+      if (id === 'page-register-employer') doRegisterEmployer();
+      if (id === 'page-forgot') doForgot();
+      if (id === 'page-reset-password') doResetPassword();
+    });
+  </script>
+</body>
+
+</html>
