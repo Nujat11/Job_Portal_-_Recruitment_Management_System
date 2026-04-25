@@ -31,7 +31,7 @@ A comprehensive recruitment management platform designed to bridge the gap betwe
 - **Database:** MySQL / MariaDB
 - **Frontend:** HTML5, CSS3, JavaScript (Fetch API / AJAX)
 - **Styling:** Vanilla CSS, Google Fonts (Poppins, Segoe UI), Bootstrap (for specific components)
-- **Server:** Apache (XAMPP / InfinityFree)
+- **Server:** Apache (XAMPP)
 
 ---
 
@@ -43,7 +43,7 @@ A comprehensive recruitment management platform designed to bridge the gap betwe
 ### **Local Setup**
 1.  **Clone the Repository**:
     ```bash
-    git clone https://github.com/[your-username]/Job-Portal-Recruitment-Management-System.git
+    git clone https://github.com/Nujat11/Job-Portal-Recruitment-Management-System.git
     ```
 2.  **Move to Web Directory**:
     Copy the project folder to `C:\xampp\htdocs\` (or your server's root directory).
